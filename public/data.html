@@ -13,8 +13,13 @@
 
     <script>
         // Fetch names from the server
-        fetch('/names')
-            .then(response => response.json())
+        fetch('/names/name')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const namesList = document.getElementById('names-list');
                 data.forEach(name => {
@@ -25,5 +30,6 @@
             })
             .catch(error => console.error('Error fetching names:', error));
     </script>
+    
 </body>
 </html>
