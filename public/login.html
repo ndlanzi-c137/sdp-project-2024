@@ -1,10 +1,9 @@
-<!-- public/signup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Log In</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,22 +31,21 @@
     </style>
 </head>
 <body>
-    <h1>Create an Account</h1>
-    <p>Sign up with your email address or use your Google account.</p>
+    <h1>Log In</h1>
+    <p>Log in with your email address or use your Google account.</p>
 
-    <form action="/signup" method="POST">
-        <input type="text" name="username" placeholder="Username" required><br><br>
+    <form action="/login" method="POST">
         <input type="email" name="email" placeholder="Email" required><br><br>
         <input type="password" name="password" placeholder="Password" required><br><br>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Log In</button>
     </form>
 
     <p>Or</p>
 
     <a href="/auth/google" class="google-btn">
-        Sign up with Google
+        Log in with Google
     </a>
 
-    <p>Already have an account? <a href="/login.html">Log in here</a>.</p>
+    <p>Don't have an account? <a href="/signup.html">Sign up here</a>.</p>
 </body>
 </html>
