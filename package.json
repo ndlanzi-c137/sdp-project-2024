@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Running tests...\" && exit 0",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "mkdir -p build && cp -r public/* build/"
   },
   "keywords": [],
   "author": "",
