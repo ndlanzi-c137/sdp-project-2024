@@ -26,9 +26,11 @@ jobs:
 
       - name: Prepare artifact for deployment
         run: |
-          rm -rf build  # Clean up existing build directory
-          mkdir build    # Create build directory
-          cp -r public/* build/  # Copy public files to build directory
+          rm -rf build
+          mkdir build
+          cp -r public/* build/
+          cp server.js build/
+          cp package.json build/
 
       - name: Zip artifact for deployment
         run: zip -r release.zip build
