@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Running tests...\" && exit 0",
     "start": "node server.js",
-    "build": "mkdir -p build && cp -r public/* build/"
+    "build": "mkdir build && xcopy public build /E /I"
   },
   "keywords": [],
   "author": "",
