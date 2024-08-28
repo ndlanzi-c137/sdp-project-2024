@@ -128,7 +128,7 @@ app.get('/auth/google',
 
 
 // Serve the signup page at the root URL
-app.get('/', (req, res) => {
+app.get('https://dining-service-4d.azurewebsites.net', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
