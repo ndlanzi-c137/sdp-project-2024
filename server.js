@@ -97,8 +97,6 @@ passport.use(new GoogleStrategy({
 ));
 
 
-
-
 // Serialize user information into the session
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -117,20 +115,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Use routes
-app.use('/user', userRoutes);
-app.use('/names', dataRoutes);
-
 // Google OAuth routes
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
 );
-
-
-// Serve the signup page at the root URL
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
 
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
@@ -142,12 +130,18 @@ app.get('/auth/google/callback',
 app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
         const username = req.user.displayName || req.user.username || 'User';
-        res.send(`
-            <h1>Hello, ${username}!</h1>
-            <form action="/logout" method="POST">
-                <button type="submit">Logout</button>
-            </form>
-        `);
+
+        // Read the HTML file and replace the placeholder with the actual username
+        fs.readFile(path.join(__dirname, 'public', 'dashboard.html'), 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading the file:', err);
+                return res.status(500).send('Server Error');
+            }
+
+            // Replace the placeholder with the actual username
+            const updatedData = data.replace('Hello, User!', `Hello, ${username}!`);
+            res.send(updatedData);
+        });
     } else {
         res.redirect('/login');
     }
@@ -165,6 +159,11 @@ app.post('/logout', (req, res) => {
 
 // Route to serve the signup page
 app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+
+// Route to serve the signup page
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
