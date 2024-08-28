@@ -126,6 +126,13 @@ app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+
+// Redirect the root URL to the signup page
+app.get('/', (req, res) => {
+    res.redirect('/signup');
+});
+
+
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
