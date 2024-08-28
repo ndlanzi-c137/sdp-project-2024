@@ -127,10 +127,11 @@ app.get('/auth/google',
 );
 
 
-// Redirect the root URL to the signup page
+// Serve the signup page at the root URL
 app.get('/', (req, res) => {
-    res.redirect('/signup');
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
+
 
 
 app.get('/auth/google/callback', 
@@ -165,7 +166,7 @@ app.post('/logout', (req, res) => {
 });
 
 // Route to serve the signup page
-app.get('/', (req, res) => {
+app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
