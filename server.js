@@ -165,7 +165,7 @@ app.post('/logout', (req, res) => {
 });
 
 // Route to serve the signup page
-app.get('/signup', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
