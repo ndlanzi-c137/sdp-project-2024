@@ -128,11 +128,9 @@ app.get('/auth/google',
 
 
 // Serve the signup page at the root URL
-app.get('https://dining-service-4d.azurewebsites.net', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
-
-
 
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
