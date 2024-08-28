@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Running tests...\" && exit 0",
     "start": "node server.js",
-    "build": "set NODE_ENV=production && echo 'Building the project...' && rimraf build && mkdir build && ncp public build"
+    "build": "echo 'No build step required'"
   },
   "keywords": [],
   "author": "",
