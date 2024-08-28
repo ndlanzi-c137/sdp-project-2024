@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Running tests...\" && exit 0",
     "start": "node server.js",
-    "build": "echo 'No build step required'"
+    "build": "set NODE_ENV=production && echo 'Building the project...' && rimraf build && mkdir build && ncp public build"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +25,9 @@
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
     "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "ncp": "^2.0.0",
+    "rimraf": "^6.0.1"
   }
 }
