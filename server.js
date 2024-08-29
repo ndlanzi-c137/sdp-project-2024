@@ -5,13 +5,19 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');  // For JWT handling
-const nodemailer = require('nodemailer');  // For sending emails
+const bcrypt = require('bcryptjs');  // For password hashing
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
+// Import routes
+const userRoutes = require('./auth-routes/userRoute');
+const dataRoutes = require('./auth-routes/data');
+
+// Initialize the Express app
 const app = express();
+
+// Log environment variables (for debugging purposes, remove in production)
+console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_NAME, process.env.SSL_CA);
 
 // Create a MySQL connection with SSL
 const connection = mysql.createConnection({
@@ -19,9 +25,9 @@ const connection = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT || 3306,
+    port: process.env.DB_PORT || 3306, // Default MySQL port
     ssl: {
-        ca: fs.readFileSync(process.env.SSL_CA),
+        ca: fs.readFileSync(process.env.SSL_CA), // Ensure this path is correct
         rejectUnauthorized: false
     },
     waitForConnections: true,
@@ -29,6 +35,7 @@ const connection = mysql.createConnection({
     queueLimit: 0
 });
 
+// Connect to the database
 connection.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err.stack);
@@ -37,6 +44,7 @@ connection.connect((err) => {
     console.log('Connected to the database as ID ' + connection.threadId);
 });
 
+// Make the connection globally accessible
 global.connection = connection;
 
 // Set up session management
@@ -54,29 +62,33 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback'
+    callbackURL:  process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3000/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
+    // Check if the user already exists in the database
     connection.query('SELECT * FROM users WHERE google_id = ?', [profile.id], async (err, results) => {
         if (err) {
             return done(err);
         }
 
         if (results.length > 0) {
+            // User already exists, pass the user to the next middleware
             return done(null, results[0]);
         } else {
+            // User doesn't exist, save them to the database
             const newUser = {
                 google_id: profile.id,
-                username: profile.displayName,
+                displayName: profile.displayName,
                 email: profile.emails[0].value // Google's email
             };
 
+            // Insert the new user into the database
             connection.query('INSERT INTO users (google_id, username, email) VALUES (?, ?, ?)', 
-              [newUser.google_id, newUser.username, newUser.email], (err, result) => {
+              [newUser.google_id, newUser.displayName, newUser.email], (err, result) => {
                 if (err) {
                     return done(err);
                 }
-                newUser.id = result.insertId;
+                newUser.id = result.insertId; // Get the new user's ID
                 return done(null, newUser);
             });
         }
@@ -84,22 +96,22 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+
 // Serialize user information into the session
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 
 // Deserialize user information from the session
-passport.deserializeUser((id, done) => {
-    connection.query('SELECT * FROM users WHERE id = ?', [id], (err, user) => {
-        done(err, user[0]);
-    });
+passport.deserializeUser((user, done) => {
+    done(null, user);
 });
 
-// Serve static files
+
+// Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Use body-parser middleware
+// Use body-parser middleware to parse incoming requests
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -111,25 +123,22 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        // Generate a JWT token
-        const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        // Send the token to the client (you can set it in a cookie or return as JSON)
-        res.json({ msg: 'Login successful', token });
+        res.redirect('/dashboard');
     }
 );
 
-// Dashboard route
 app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
         const username = req.user.displayName || req.user.username || 'User';
 
+        // Read the HTML file and replace the placeholder with the actual username
         fs.readFile(path.join(__dirname, 'public', 'dashboard.html'), 'utf8', (err, data) => {
             if (err) {
                 console.error('Error reading the file:', err);
                 return res.status(500).send('Server Error');
             }
 
+            // Replace the placeholder with the actual username
             const updatedData = data.replace('Hello, User!', `Hello, ${username}!`);
             res.send(updatedData);
         });
@@ -138,7 +147,6 @@ app.get('/dashboard', (req, res) => {
     }
 });
 
-// Logout route
 app.post('/logout', (req, res) => {
     req.logout((err) => {
         if (err) {
@@ -149,32 +157,15 @@ app.post('/logout', (req, res) => {
     });
 });
 
-// Send verification email
-function sendVerificationEmail(email, token) {
-    const transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
+// Route to serve the signup page
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Email Verification',
-        text: `Click the link to verify your email: https://dining-service-4d.azurewebsites.net/verify-email?token=${token}`,
-        html: `<p>Click the link to verify your email: <a href="https://dining-service-4d.azurewebsites.net/verify-email?token=${token}">Verify Email</a></p>`
-    };
-
-    transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-            console.error('Error sending email:', err);
-        } else {
-            console.log('Verification email sent:', info.response);
-        }
-    });
-}
+// Route to serve the login page
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
 // Handle the signup form submission
 app.post('/signup', async (req, res) => {
@@ -194,20 +185,14 @@ app.post('/signup', async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
-            connection.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', 
-              [username, email, hashedPassword], (err, result) => {
+            const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+            connection.query(sql, [username, email, hashedPassword], (err, result) => {
                 if (err) {
                     console.error('Database insert error:', err);
                     return res.status(500).json({ msg: 'Server Error: Unable to insert user' });
                 }
 
-                // Generate a verification token
-                const token = jwt.sign({ id: result.insertId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-                // Send verification email
-                sendVerificationEmail(email, token);
-
-                return res.status(200).json({ msg: 'Signup successful, please check your email for verification link.' });
+                return res.status(200).json({ msg: 'Signup successful, redirecting...' });
             });
         });
     } catch (err) {
@@ -242,11 +227,7 @@ app.post('/login', (req, res) => {
                     console.error('Error during login:', err);
                     return res.status(500).json({ msg: 'Server Error: Unable to log in' });
                 }
-
-                // Generate a JWT token
-                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-                return res.status(200).json({ msg: 'Login successful, redirecting...', token });
+                return res.status(200).json({ msg: 'Login successful, redirecting...' });
             });
         });
     } catch (err) {
