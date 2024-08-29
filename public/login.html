@@ -28,17 +28,50 @@
         form {
             margin-top: 20px;
         }
+        .error-message {
+            color: red;
+            margin-top: 20px;
+        }
     </style>
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.msg);
+                }
+
+                alert(result.msg);
+                window.location.href = '/dashboard';
+            } catch (error) {
+                document.getElementById('error-message').textContent = error.message;
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Log In</h1>
     <p>Log in with your email address or use your Google account.</p>
 
-    <form action="/login" method="POST">
+    <form onsubmit="handleLogin(event)">
         <input type="email" name="email" placeholder="Email" required><br><br>
         <input type="password" name="password" placeholder="Password" required><br><br>
         <button type="submit">Log In</button>
     </form>
+
+    <p class="error-message" id="error-message"></p>
 
     <p>Or</p>
 
