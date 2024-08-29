@@ -54,6 +54,16 @@
     letter-spacing: 0.94px;
 }
 
+/* Error Message */
+.signup .error-message {
+    color: red; /* Change this to any color you prefer */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    text-align: center;
+}
+
 /* Wrapper for input fields and button */
 .signup .form-group {
     display: flex;
@@ -96,12 +106,14 @@
     width: 90%;
     max-width: 298px;
     height: 45px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px auto;
     background-color: #f4db7d;
     border-radius: 12px;
     font-family: "Inter-Regular", Helvetica;
     font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #000000;
     letter-spacing: 0.52px;
     border: none;
@@ -112,6 +124,26 @@
 .signup .btn-create-account:hover{
     background-color: #e2c36b;
 }
+
+/* Google Sign-In */
+.signup .google-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.signup .google {
+    width: 36px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Key */
+}
+
+.signup .google:hover{
+    transform: scale(1.1);
+}
+
 
 /* Signin Link */
 .signup .already-have-an {
