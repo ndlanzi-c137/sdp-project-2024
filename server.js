@@ -172,7 +172,6 @@ app.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-        // Check if the user already exists
         connection.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             if (err) {
                 console.error('Database query error:', err);
@@ -183,11 +182,9 @@ app.post('/signup', async (req, res) => {
                 return res.status(400).json({ msg: 'User already exists' });
             }
 
-            // Hash the password
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
-            // Insert new user into the database
             const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
             connection.query(sql, [username, email, hashedPassword], (err, result) => {
                 if (err) {
@@ -195,8 +192,7 @@ app.post('/signup', async (req, res) => {
                     return res.status(500).json({ msg: 'Server Error: Unable to insert user' });
                 }
 
-                // Redirect to login page after successful signup
-                res.redirect('/login');
+                return res.status(200).json({ msg: 'Signup successful, redirecting...' });
             });
         });
     } catch (err) {
@@ -204,7 +200,6 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ msg: `Server Error: Unexpected error occurred - ${err.message}` });
     }
 });
-
 
 // Handle the login form submission
 app.post('/login', (req, res) => {
@@ -232,7 +227,7 @@ app.post('/login', (req, res) => {
                     console.error('Error during login:', err);
                     return res.status(500).json({ msg: 'Server Error: Unable to log in' });
                 }
-                return res.redirect('/dashboard');
+                return res.status(200).json({ msg: 'Login successful, redirecting...' });
             });
         });
     } catch (err) {
