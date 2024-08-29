@@ -1,0 +1,135 @@
+.signup {
+    background-color: #1a2238;
+    display: flex;
+    /*flex-direction: row;*/
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Key */
+}
+
+.signup .div {
+    background-color: #1a2238;
+    overflow: visible;
+    width: 320px;
+    height: auto;
+    position: relative;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.signup .overlap {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.signup .option {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+}
+
+.signup .p {
+    font-family: "Irish Grover-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 47px;
+    letter-spacing: 0.94px;
+    line-height: normal;
+}
+
+.signup .text-wrapper {
+    color: #ffffff;
+    letter-spacing: 0.94px;
+}
+
+.signup .span {
+    color: #ff6a3d;
+    letter-spacing: 0.94px;
+}
+
+/* Wrapper for input fields and button */
+.signup .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Input Fields */
+.signup .input-wrapper {
+    position: relative;
+    width: 280px;
+    margin: 10px auto;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.signup .input-field {
+    width: 100%;
+    padding: 8px 40px;
+    border: none;
+    border-radius: 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    color: #1a2238;
+    background-color: transparent;
+}
+
+.signup .icon {
+    position: absolute;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+}
+
+/* Create Account Button */
+.signup .btn-create-account {
+    width: 280px;
+    height: 45px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #f4db7d;
+    border-radius: 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 22px;
+    color: #000000;
+    letter-spacing: 0.52px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Key */
+}
+
+.signup .btn-create-account:hover{
+    background-color: #e2c36b;
+}
+
+/* Signin Link */
+.signup .already-have-an {
+    text-align: center;
+    margin-top: 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.signup .signin-link {
+    color: #f4db7d;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Key */
+}
+
+.signup .signin-link:hover{
+    color: #e2c36b; /* Key */
+}
+
+/* Media query for small screens */
+@media (max-height: 600px) {
+    .signup .div {
+        transform: scale(0.9); /* Scale down form slightly */
+        transform-origin: top center; /* Ensure scaling happens from the top */
+    }
+}
