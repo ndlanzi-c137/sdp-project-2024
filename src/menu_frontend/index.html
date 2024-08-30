@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function fetchAndDisplay(dietPlan) {
+    ['breakfast', 'lunch', 'dinner'].forEach(category => {
+        fetch(`/${category}?dietPlan=${dietPlan}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(`${category} data:`, data);
+
+                // Define types based on category
+                const types = {
+                    breakfast: ['Snack Pack', 'Main Meal'],
+                    lunch: ['Snack Pack', 'Main Meal', 'Fast food'],
+                    dinner: ['Snack Pack', 'Main Meal', 'Fast food']
+                };
+
+                // Clear previous data
+                types[category].forEach(type => {
+                    const tableBody = document.getElementById(`${category}-${type.toLowerCase().replace(/\s+/g, '')}TableBody`);
+                    if (tableBody) {
+                        tableBody.innerHTML = '';
+                    }
+                });
+
+                // Group data by type
+                const groupedData = data.reduce((acc, item) => {
+                    const type = item.TYPE ? item.TYPE.trim() : 'Unknown'; // Ensure type is trimmed
+                    if (!acc[type]) {
+                        acc[type] = [];
+                    }
+                    acc[type].push(item);
+                    return acc;
+                }, {});
+
+                // Log grouped data for debugging
+                console.log('Grouped Data:', groupedData);
+
+                // Display grouped data
+                types[category].forEach(type => {
+                    const tableBody = document.getElementById(`${category}-${type.toLowerCase().replace(/\s+/g, '')}TableBody`);
+                    if (tableBody) {
+                        const items = groupedData[type] || [];
+                        console.log(`${category} ${type} items:`, items); // Add this log
+                        items.forEach(item => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${item.ITEM_NAME}</td>
+                                <td>${item.ITEM_INGREDIENTS || 'N/A'}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    }
+                });
+            })
+            .catch(error => console.error(`Error fetching ${category} items:`, error));
+    });
+}
+
+            document.getElementById('dietPlanForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const dietPlan = document.getElementById('dietPlanInput').value.trim();
+                if (dietPlan) {
+                    fetchAndDisplay(dietPlan);
+                } else {
+                    console.error('Diet plan input is empty.');
+                }
+            });
+        });
+    </script>
+    
+    
+</head>
+<body>
+    <h1>Menu</h1>
+    <div>
+        <form id="dietPlanForm">
+            <label for="dietPlanInput">Enter Diet Plan:</label>
+            <input type="text" id="dietPlanInput" placeholder="e.g., halal, vegetarian" />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="breakfast">
+        <h2>Breakfast</h2>
+        <div>
+            <h3>Snack Pack</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="breakfast-snackpackTableBody"></tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Main Meal</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="breakfast-mainmealTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="lunch">
+        <h2>Lunch</h2>
+        <div>
+            <h3>Snack Pack</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="lunch-snackpackTableBody"></tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Main Meal</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="lunch-mainmealTableBody"></tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Fast Food</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="lunch-fastfoodTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+    <div id="dinner">
+        <h2>Dinner</h2>
+        <div>
+            <h3>Snack Pack</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="dinner-snackpackTableBody"></tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Main Meal</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="dinner-mainmealTableBody"></tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Fast Food</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody id="dinner-fastfoodTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
