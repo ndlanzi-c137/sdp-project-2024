@@ -4,63 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            color: #1A223B;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #9DAAF2;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            background-color: #FF6A3D;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #FF5733;
+        }
+    </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             function fetchAndDisplay(dietPlan) {
-    ['breakfast', 'lunch', 'dinner'].forEach(category => {
-        fetch(`/${category}?dietPlan=${dietPlan}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(`${category} data:`, data);
+                ['breakfast', 'lunch', 'dinner'].forEach(category => {
+                    fetch(`/${category}?dietPlan=${dietPlan}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(`${category} data:`, data);
 
-                // Define types based on category
-                const types = {
-                    breakfast: ['Snack Pack', 'Main Meal'],
-                    lunch: ['Snack Pack', 'Main Meal', 'Fast food'],
-                    dinner: ['Snack Pack', 'Main Meal', 'Fast food']
-                };
+                            const types = {
+                                breakfast: ['Snack Pack', 'Main Meal'],
+                                lunch: ['Snack Pack', 'Main Meal', 'Fast Food'],
+                                dinner: ['Snack Pack', 'Main Meal', 'Fast Food']
+                            };
 
-                // Clear previous data
-                types[category].forEach(type => {
-                    const tableBody = document.getElementById(`${category}-${type.toLowerCase().replace(/\s+/g, '')}TableBody`);
-                    if (tableBody) {
-                        tableBody.innerHTML = '';
-                    }
+                            types[category].forEach(type => {
+                                const tableBody = document.getElementById(`${category}-${type.toLowerCase().replace(/\s+/g, '')}TableBody`);
+                                if (tableBody) {
+                                    tableBody.innerHTML = '';  // Clear previous data
+                                }
+
+                                const groupedData = data.filter(item => item.TYPE && item.TYPE.trim() === type);
+
+                                groupedData.forEach(item => {
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${item.ITEM_NAME}</td>
+                                        <td>${item.ITEM_INGREDIENTS || 'N/A'}</td>
+                                    `;
+                                    tableBody.appendChild(row);
+                                });
+                            });
+                        })
+                        .catch(error => console.error(`Error fetching ${category} items:`, error));
                 });
-
-                // Group data by type
-                const groupedData = data.reduce((acc, item) => {
-                    const type = item.TYPE ? item.TYPE.trim() : 'Unknown'; // Ensure type is trimmed
-                    if (!acc[type]) {
-                        acc[type] = [];
-                    }
-                    acc[type].push(item);
-                    return acc;
-                }, {});
-
-                // Log grouped data for debugging
-                console.log('Grouped Data:', groupedData);
-
-                // Display grouped data
-                types[category].forEach(type => {
-                    const tableBody = document.getElementById(`${category}-${type.toLowerCase().replace(/\s+/g, '')}TableBody`);
-                    if (tableBody) {
-                        const items = groupedData[type] || [];
-                        console.log(`${category} ${type} items:`, items); // Add this log
-                        items.forEach(item => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${item.ITEM_NAME}</td>
-                                <td>${item.ITEM_INGREDIENTS || 'N/A'}</td>
-                            `;
-                            tableBody.appendChild(row);
-                        });
-                    }
-                });
-            })
-            .catch(error => console.error(`Error fetching ${category} items:`, error));
-    });
-}
+            }
 
             document.getElementById('dietPlanForm').addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -73,8 +106,6 @@
             });
         });
     </script>
-    
-    
 </head>
 <body>
     <h1>Menu</h1>
@@ -90,7 +121,7 @@
         <h2>Breakfast</h2>
         <div>
             <h3>Snack Pack</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -102,7 +133,7 @@
         </div>
         <div>
             <h3>Main Meal</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -113,11 +144,12 @@
             </table>
         </div>
     </div>
+
     <div id="lunch">
         <h2>Lunch</h2>
         <div>
             <h3>Snack Pack</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -129,7 +161,7 @@
         </div>
         <div>
             <h3>Main Meal</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -141,7 +173,7 @@
         </div>
         <div>
             <h3>Fast Food</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -152,13 +184,12 @@
             </table>
         </div>
     </div>
-    
-    
+
     <div id="dinner">
         <h2>Dinner</h2>
         <div>
             <h3>Snack Pack</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -170,7 +201,7 @@
         </div>
         <div>
             <h3>Main Meal</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -182,7 +213,7 @@
         </div>
         <div>
             <h3>Fast Food</h3>
-            <table border="1">
+            <table>
                 <thead>
                     <tr>
                         <th>Item Name</th>
@@ -193,6 +224,5 @@
             </table>
         </div>
     </div>
-    
 </body>
 </html>
