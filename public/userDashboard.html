@@ -1,0 +1,35 @@
+<!-- public/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="userDashboard.css" />
+  </head>
+  <body>
+    <nav class="appNavbar">
+      <p>
+        <img src="/public/images/option-21.svg" alt="appIcon" />Campus<span
+          class="crave"
+          >Crave</span
+        >
+      </p>
+    </nav>
+    <p class="welcomeUser">Welcome, {{username}}</p>
+    <div class="orangeBackground">
+      <p class="mealCredits">70 Meal Credits</p>
+      <div class="menu">
+        <a href="#"> Menu</a>
+      </div>
+      <div class="mealManagement"><a href="#">Meal Credits Management</a></div>
+      <div class="dietaryPreference"><a href="#"> Dietary Preference</a></div>
+      <div class="reservation"><a href="#">Reservation</a></div>
+    </div>
+    <div class="feedback"><a href="#">Feedback</a></div>
+    <div class="diningInformation"><a href="#">Dining Information</a></div>
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>
