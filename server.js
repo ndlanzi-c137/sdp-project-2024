@@ -147,25 +147,7 @@ app.get(
   }
 );
 
-// app.get('/dashboard', (req, res) => {
-//     if (req.isAuthenticated()) {
-//         const username = req.user.displayName || req.user.username || 'User';
 
-//         // Read the HTML file and replace the placeholder with the actual username
-//         fs.readFile(path.join(__dirname, 'public', 'dashboard.html'), 'utf8', (err, data) => {
-//             if (err) {
-//                 console.error('Error reading the file:', err);
-//                 return res.status(500).send('Server Error');
-//             }
-
-//             // Replace the placeholder with the actual username
-//             const updatedData = data.replace('Hello, User!', `Hello, ${username}!`);
-//             res.send(updatedData);
-//         });
-//     } else {
-//         res.redirect('/login');
-//     }
-// });
 app.get("/userDashboard", (req, res) => {
   if (req.isAuthenticated()) {
     const username =
