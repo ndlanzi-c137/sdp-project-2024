@@ -1,60 +1,317 @@
-* {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-body {
+.iphone-pro {
   background-color: #1a2238;
-  color: white;
-}
-.appNavbar {
   display: flex;
-  align-items: center;
-  margin: 10px;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 }
-.orangeBackground {
-  color: white;
+
+.iphone-pro .div {
+  background-color: #1a2238;
+  height: 610px;
+  overflow: visible;
+  position:absolute;
+  width: 393px;
+}
+
+.iphone-pro .overlap {
+  border-radius: 20px;
+  height: 30px; /* Decreased from 40px to 30px */
+  left: 34px;
+  position: absolute;
+  top: 480px;
+  width: 290px;
+}
+
+
+.iphone-pro .rectangle {
+  background-color: #ffffffeb;
+  border-radius: 20px;
+  height: 62px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 294px;
+}
+
+.iphone-pro .text-wrapper {
+  color: #ff6a3d;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 25px;
+  font-weight: 600;
+  left: 23px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 15px;
+  white-space: nowrap;
+}
+
+.iphone-pro .how-to-give-feedback {
+  height: 30px;
+  left: 244px;
+  position: absolute;
+  top: 15px;
+  width: 30px;
+}
+
+.iphone-pro .overlap-group {
+  height: 431px;
+  left: 0;
+  position: absolute;
+  top: 188px;
+  width: 457px;
+}
+
+.iphone-pro .rectangle-2 {
   background-color: #ff6a3d;
-  padding: 50px;
-}
-a {
-  text-decoration: none;
-  color: black;
-}
-.menu {
-  font-weight: 700;
-  color: black;
-  background-color: #fffffff0;
-  margin: 10px;
+  border-radius: 30px;
+  height: 316px;
+  left: 0;
+  position: absolute;
+  top: -65px;
+  border-radius: 30px;
+  flex-shrink: 0;
+  width: 393px;
 }
 
-.mealManagement {
-  font-weight: 700;
-  color: black;
+.iphone-pro .rectangle-3 {
   background-color: #fffffff0;
-  margin: 10px;
+  border-radius: 20px;
+  height: 120px;
+  left: 41px;
+  position: absolute;
+  top: -10px;
+  width: 120px;
 }
-.dietaryPreference {
-  font-weight: 700;
-  color: black;
-  background-color: #fffffff0;
-  margin: 10px;
-}
-.reservation {
-  font-weight: 700;
-  color: black;
-  background-color: #fffffff0;
-  margin: 10px;
-}
-.feedback {
-  margin: 10px;
-  font-weight: 700;
-  background-color: #fffffff0;
-  color: #ff6a3d;
-}
-.diningInformation {
-  margin: 10px;
 
-  font-weight: 700;
+.iphone-pro .rectangle-4 {
+  background-color: #ffffffed;
+  border-radius: 20px;
+  height: 146px;
+  left: 41px;
+  position: absolute;
+  top: 125px;
+  width: 132px;
+}
+
+.iphone-pro .rectangle-5 {
   background-color: #fffffff0;
+  border-radius: 20px;
+  height: 120px;
+  left: 208px;
+  position: absolute;
+  top: 160px;
+  width: 134px;
+}
+
+.iphone-pro .rectangle-6 {
+  background-color: #ffffffed;
+  border-radius: 20px;
+  height: 164px;
+  left: 194px;
+  position: absolute;
+  top: -10px;
+  width: 148px;
+}
+
+.iphone-pro .text-wrapper-2 {
+  color: #1a2238;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 25px;
+  font-weight: 600;
+  left: 70px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 35px;
+  white-space: nowrap;
+}
+
+.iphone-pro .meal-credits {
+  color: #1a2238;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 21px;
+  font-weight: 600;
+  left: 195px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 40px;
+  width: 260px;
+}
+
+.iphone-pro .text-wrapper-3 {
+  color: #1a2238;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  left: 220px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 220px;
+  white-space: nowrap;
+  width: 118px;
+}
+
+.iphone-pro .dietary-preference {
+  color: #1a2238;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  left: 50px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 190px;
+  width: 132px;
+}
+
+.iphone-pro .group {
+  height: 30px;
+  left: 125px;
+  position: absolute;
+  top: -5px;
+  width: 30px;
+}
+
+/*.iphone-pro .logout-button {
+  height: 30px;
+  left: 287px;
+  position: absolute;
+  top: 20px;
+  width: 30px;
+}*/
+
+.iphone-pro .dietary-cholesterol {
+  height: 30px;
+  left: 126px;
+  position: absolute;
+  top: 150px;
+  width: 30px;
+}
+
+.iphone-pro .round-dining-table {
+  height: 40px;
+  left: 288px;
+  position: absolute;
+  top: 170px;
+  width: 40px;
+}
+
+.iphone-pro .text-wrapper-4 {
+  color: #ffffff;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 800;
+  left: 75px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: -50px;
+  white-space: nowrap;
+  width: 206px;
+}
+
+.iphone-pro .save-your-money {
+  height: 40px;
+  left: 289px;
+  position: absolute;
+  top: -5px;
+  width: 40px;
+}
+
+.iphone-pro .overlap-2 {
+  background-color: #fffffff0;
+  border-radius: 20px;
+  height: 58px;
+  left: 34px;
+  position: absolute;
+  top: 550px;
+  width: 294px;
+}
+
+.iphone-pro .text-wrapper-5 {
   color: #ff6a3d;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 25px;
+  font-weight: 600;
+  left: 19px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 8px;
+  white-space: nowrap;
+}
+
+.iphone-pro .img {
+  height: 30px;
+  left: 250px;
+  position: absolute;
+  top: 9px;
+  width: 30px;
+  
+}
+
+.iphone-pro .overlap-3 {
+  height: 54px;
+  left: 53px;
+  position: absolute;
+  top: 37px;
+  width: 215px;
+}
+
+.iphone-pro .campus-crave {
+  color: transparent;
+  font-family: "Jomhuria-Regular", Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  left: -5px;
+  letter-spacing: 0;
+  line-height: 1; /* Adjust line-height if needed */
+  position: absolute;
+  top: -42px;
+  width: auto; /* Ensure the width is not restricting the text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+}
+
+
+.iphone-pro .span {
+  color: #ffffff;
+}
+
+.iphone-pro .text-wrapper-6 {
+  color: #ff6a3d;
+}
+
+.iphone-pro .option {
+  height: 50px;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: -35px;
+  left: -30px;
+  width: 50px;
+}
+
+.iphone-pro .text-wrapper-7 {
+  color: #ffffff;
+  font-family: "Jomhuria-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 800;
+  left: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 75px;
+  white-space: nowrap;
+}
+
+.iphone-pro .vector {
+  height: 26px;
+  left: 338px;
+  position: absolute;
+  top: 10px;
+  width: 26px;
 }
