@@ -84,7 +84,7 @@
             throw new Error(result.msg);
           }
 
-          alert(result.msg);
+          // Redirect to User Dashboard page automatically
           window.location.href = "/userDashboard";
         } catch (error) {
           document.getElementById("error-message").textContent = error.message;

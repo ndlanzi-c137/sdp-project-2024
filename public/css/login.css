@@ -1,3 +1,14 @@
+/* Reset margin and padding */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1e2939; /* Ensure the same background as the login container */
+    box-sizing: border-box;
+}
+
+
 /* Overall login container */
 .login {
     background-color: #1e2939;
@@ -14,7 +25,7 @@
 
 /* Inner div container */
 .login .div {
-    background-color: #1e2939;
+    background-color: #1e2939; 
     overflow: hidden;
     width: 90%; /* Responsive width */
     max-width: 360px;
@@ -95,7 +106,7 @@
     border-radius: 12px;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
-    color: #1e2939;
+    color: #1a2238;
     background-color: transparent;
 }
 

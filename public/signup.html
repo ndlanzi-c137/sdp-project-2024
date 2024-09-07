@@ -89,7 +89,7 @@
                         throw new Error(result.msg);
                     }
 
-                    alert(result.msg);
+                    // Redirect to login page automatically
                     window.location.href = '/login';
                 } catch (error) {
                     document.getElementById('error-message').textContent = error.message;
