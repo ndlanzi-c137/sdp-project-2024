@@ -1,6 +1,6 @@
 /* Overall login container */
 .login {
-    background-color: #1a2238;
+    background-color: #1e2939;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,7 +14,7 @@
 
 /* Inner div container */
 .login .div {
-    background-color: #1a2238;
+    background-color: #1e2939;
     overflow: hidden;
     width: 90%; /* Responsive width */
     max-width: 360px;
@@ -95,7 +95,7 @@
     border-radius: 12px;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
-    color: #1a2238;
+    color: #1e2939;
     background-color: transparent;
 }
 
