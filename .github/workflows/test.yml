@@ -16,8 +16,7 @@ jobs:
       - run: npm install coveralls 
       - run: npm test -- --coverage
       - name: Upload coverage to Coveralls
-        run: |
-          npx coveralls < ./coverage/lcov.info
+        run: npm run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
