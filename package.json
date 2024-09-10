@@ -1,12 +1,13 @@
 {
   "name": "sdp-project-2024",
   "version": "1.0.0",
-  "description": "",
+  "description": "Click on the badge to view coverage on coveralls\r [![Coverage Status](https://coveralls.io/repos/github/PalesaMonica/sdp-project-2024/badge.svg?branch=main)](https://coveralls.io/github/PalesaMonica/sdp-project-2024?branch=main)",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Running tests...\" && exit 0",
+    "test": "jest --coverage",
     "start": "node server.js",
-    "build": "echo 'No build step required'"
+    "build": "echo 'No build step required'",
+    "coverage": "nyc jest"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +29,26 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "coveralls": "^3.1.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^22.1.0",
     "ncp": "^2.0.0",
-    "rimraf": "^6.0.1"
-  }
+    "nyc": "^17.0.0",
+    "puppeteer": "^5.5.0",
+    "rimraf": "^6.0.1",
+    "supertest": "^7.0.0",
+    "util": "^0.12.5"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PalesaMonica/sdp-project-2024.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PalesaMonica/sdp-project-2024/issues"
+  },
+  "homepage": "https://github.com/PalesaMonica/sdp-project-2024#readme"
 }

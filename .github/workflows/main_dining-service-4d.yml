@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - dining-service-4D
+name: Build, test, and deploy Node.js app to Azure Web App - dining-service-4D
 
 on:
   push:
@@ -25,7 +22,12 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
+          npm run test
+
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Zip artifact for deployment
         run: zip -r release.zip .
@@ -68,4 +70,3 @@ jobs:
           app-name: 'dining-service-4D'
           slot-name: 'Production'
           package: .
-          
