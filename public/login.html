@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="globals.css" />
     <link rel="stylesheet" href="css/login.css" />
+    <link rel="script" href="../src/js/login.js" />
     <title>Log In</title>
   </head>
   <body>
@@ -64,32 +65,7 @@
       </div>
     </div>
 
-    <script>
-      async function handleLogin(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData.entries());
-
-        try {
-          const response = await fetch("/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
-
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.msg);
-          }
-
-          // Redirect to User Dashboard page automatically
-          window.location.href = "/userDashboard";
-        } catch (error) {
-          document.getElementById("error-message").textContent = error.message;
-        }
-      }
-    </script>
   </body>
+
+  <script src="../src/js/login.js"></script>
 </html>
